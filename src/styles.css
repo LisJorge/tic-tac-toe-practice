@@ -54,10 +54,11 @@
     font-family: sans-serif;
     margin: 20px;
     padding: 0;
+    background: #9ebbe7;
   }
   
   .square {
-    background: #9ebbe7;
+    background: #ebebeb;
     border: 5px solid #2b779b;
     float: left;
     font-size: 40px;

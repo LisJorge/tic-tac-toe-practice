@@ -16,8 +16,8 @@ function calculateWinner(squares) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
-    return null;
   }
+  return null;
 }
 
 function Square({ value, onSquareClick }) {
@@ -29,6 +29,13 @@ function Square({ value, onSquareClick }) {
 }
 
 function Board({ xIsNext, squares, onPlay }) {
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = "Next player: " + (xIsNext ? "X" : "O");
+  }
   function handleClick(i) {
     if (calculateWinner(squares) || squares[i]) {
       return;
@@ -43,13 +50,6 @@ function Board({ xIsNext, squares, onPlay }) {
     onPlay(nextSquares);
   }
 
-  const winner = calculateWinner(squares);
-  let status;
-  if (winner) {
-    status = "Winner: " + winner;
-  } else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
-  }
 
   return (
     <>
@@ -93,10 +93,8 @@ export default function Game() {
 
   const moves = history.map((squares, move) => {
     const text = move === 0 ? "Restart" : `Go to move #${move}`;
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}> {text} </button>
-      </li>
+    return (      
+      <button className="info-button"  onClick={() => jumpTo(move)}> {text} </button>
     );
   });
   return (
@@ -105,7 +103,7 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
-        <ol>{moves}</ol>
+        {moves}
       </div>
     </div>
   );
